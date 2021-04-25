@@ -1,0 +1,47 @@
+.form-container {
+  width: 250px;
+  height: auto;
+  padding: 40px 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 #000;
+  margin: 30% auto;
+  position: relative;
+}
+
+.user-img {
+  background: url("../assets/images/movieman.png") no-repeat;
+  height: 70px;
+  width: 70px;
+  background-size: 100%;
+  position: absolute;
+  top: -40px;
+  left: 110px;
+}
+
+ul.list {
+  list-style-type: none;
+  text-align: center;
+}
+
+ul.list li {
+  width: 250px;
+  margin-bottom: 10px;
+}
+
+ul.list li input {
+  width: 250px;
+  text-align: center;
+  padding: 8px 0px;
+  border: none;
+  background-color: #d3d3d3;
+  border-radius: 5px;
+}
+ul.list li input[type="button"] {
+  background-color: #4690fb;
+  color: #fff;
+}
+
+uiul.list li:nth-child(5) {
+  color: red;
+}

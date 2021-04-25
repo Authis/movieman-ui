@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {BrowserRouter as Router,Route} from "react-router-dom";
-import Dashboard from "./Dashboard";
-import Login from "./Login";
-import Movies from "./Movies";
-import './Global.css';
+import Dashboard from "./views/Dashboard";
+import Login from "./views/Login";
+import Movies from "./views/Movies";
+import "./styles/Global.css";
 
  
 
