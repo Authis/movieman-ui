@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import "../styles/dashboard.css";
 import MovieIcon from "../assets/images/video-camera.png";
+import BiddingMovie from "../assets/images/bidding.png";
+import Audience from "../assets/images/audience.png";
+import Settings from "../assets/images/settings.png";
+import Theater from "../assets/images/Theater.png";
 import DashboardCards from "../components/dashboardCards";
+
+
 
 import { withRouter } from "react-router-dom";
 
@@ -12,19 +18,19 @@ const options = [
   },
   {
     name: "BiddingMovies",
-    icon: MovieIcon,
+    icon: BiddingMovie,
   },
   {
     name: "Users",
-    icon: MovieIcon,
+    icon: Audience,
   },
   {
     name: "Settings",
-    icon: MovieIcon,
+    icon: Settings,
   },
   {
-    name: "Coming Soon ...",
-    icon: MovieIcon,
+    name: "Theater",
+    icon: Theater,
   },
   {
     name: "Coming Soon ...",
@@ -43,13 +49,15 @@ const Dashboard = (props) => {
   function navManageMovies() {
     console.log(">>>>>>>");
     props.history.push({
-      pathname: "/Movies",
+     // pathname: "/Movies",
+     pathname: "/MoviesGrid",
     });
   }
 
   return (
     <div className="main-container">
-      {options.map((option, i) => {
+      {
+      options.map((option, i) => {
         return (
           <DashboardCards
             key={i}
@@ -58,7 +66,8 @@ const Dashboard = (props) => {
             navManageMovies={navManageMovies}
           />
         );
-      })}
+      })
+      }
     </div>
   );
 };
