@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {BrowserRouter as Router,Route} from "react-router-dom";
 import Dashboard from "./views/Dashboard";
 import Login from "./views/Login";
-import Movies from "./views/Movies";
+import AddMovies from "./views/AddMovies";
 import MoviesGrid from "./views/MoviesGrid";
 import "./styles/Global.css";
 
@@ -15,7 +15,7 @@ const App = () => {
            <div className="app">
                <Route exact path="/" component={Login} />
                <Route exact path="/dashboard" component={Dashboard}/>
-               <Route exact path="/movies" component={Movies}/>
+               <Route exact path="/addmovies" component={AddMovies}/>
                <Route exact path="/MoviesGrid" component={MoviesGrid}/>
                {/* <Route exact path="/theaters" component={Theaters}/>
                <Route exact path="/biddingMovies" component={BiddingMovies}/>
