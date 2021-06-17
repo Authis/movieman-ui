@@ -5,7 +5,10 @@ import BiddingMovie from "../assets/images/bidding.png";
 import Audience from "../assets/images/audience.png";
 import Settings from "../assets/images/settings.png";
 import Theater from "../assets/images/Theater.png";
+import LotteryBalls from "../assets/images/lotteryballs.jpeg";
 import DashboardCards from "../components/dashboardCards";
+
+
 
 
 
@@ -15,42 +18,50 @@ const options = [
   {
     name: "Movie",
     icon: MovieIcon,
-  },
-  {
-    name: "BiddingMovies",
-    icon: BiddingMovie,
-  },
-  {
-    name: "Users",
-    icon: Audience,
-  },
-  {
-    name: "Settings",
-    icon: Settings,
+    nav:"/MoviesGrid",
   },
   {
     name: "Theater",
     icon: Theater,
+    nav:"/TheatresGrid",
+  },
+  {
+    name: "Screening Lot",
+    icon: LotteryBalls,
+    nav:"/ScrenningLotGrid",
+  },
+ 
+  {
+    name: "On Going Bid",
+    icon: Settings,
+    nav:"/MoviesGrid",
+  },
+  
+  {
+    name: "User Bids",
+    icon: MovieIcon,
+    nav:"/MoviesGrid",
   },
   {
     name: "Coming Soon ...",
     icon: MovieIcon,
+    nav:"/MoviesGrid",
+  },
+  {
+    name: "Users",
+    icon: Audience,
+    nav:"/MoviesGrid",
   },
   {
     name: "Coming Soon ...",
     icon: MovieIcon,
-  },
-  {
-    name: "Coming Soon ...",
-    icon: MovieIcon,
+    nav:"/MoviesGrid",
   },
 ];
 const Dashboard = (props) => {
-  function navManageMovies() {
-    console.log(">>>>>>>");
-    props.history.push({
-     // pathname: "/Movies",
-     pathname: "/MoviesGrid",
+  function navManageMovies(val) {
+      props.history.push({
+      pathname: val,
     });
   }
 
@@ -63,6 +74,7 @@ const Dashboard = (props) => {
             key={i}
             name={option.name}
             icon={option.icon}
+            navigation={option.nav}
             navManageMovies={navManageMovies}
           />
         );

@@ -1,4 +1,4 @@
-.movie-container {
+.data-container {
   background: #fff;
   width: 540px;
   margin: 0 auto;
@@ -8,11 +8,11 @@
   box-shadow: 2px 5px 20px rgba(119, 119, 119, 0.5);
 }
 
-.movieform {
+.dataform {
   padding: 0px 10%
 }
 
-.movieform h1 {
+.dataform h1 {
   font-family: "Montserrat", sans-serif;
   color: #f5683d;
   font-size: 1.3rem;
@@ -20,7 +20,7 @@
   margin-bottom: 35px;
 }
 
-.movieform h2 {
+.dataform h2 {
   color: #777;
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;

@@ -8,22 +8,22 @@ const axios = require('axios').default;
 
 
 
-const MoviesGrid = (props) => {
+const TheatresGrid = (props) => {
   
 
-   let [moviegriddata, setmoviegriddata] = useState();
+   let [theatregriddata, setTheatregriddata] = useState();
    useEffect( async ()=> {
 
-   const data = await getMovies();
-   console.log("DYNAMIC ARRAY ", data);
-     setmoviegriddata(data);
+   const data = await getTheatre();
+   console.log("DYNAMIC ARRAY>>>>>>>>>>>>>>> ", data);
+   setTheatregriddata(data);
       
    },[])
 
-    async function getMovies() {
+    async function getTheatre() {
        try{
         
-         const response = await axios.get('http://localhost:5001/movieman/movie/getMovieData')
+         const response = await axios.get('http://localhost:5001/movieman/theatre/getTheatreData')
          return response.data;
        }catch(e){
           return e;
@@ -32,10 +32,10 @@ const MoviesGrid = (props) => {
     }
 
    function openAddRecord() {
-     // getMovies();
+   // getTheatre();
       console.log(">>>>>>>");
       props.history.push({
-       pathname: "/AddMovies",
+       pathname: "/AddTheatre",
       });
     }
       function editRecord(val){
@@ -50,7 +50,7 @@ const MoviesGrid = (props) => {
 
        console.log(">>"+ val);
          props.history.push({
-          pathname: "/AddMovies",
+          pathname: "/AddTheatre",
         });
    
    }
@@ -58,9 +58,9 @@ const MoviesGrid = (props) => {
    function deleteRecord(val){
       console.log("Delete record>>"+ val);
       alertify.confirm('Confirm', 'Do you really want to Delete the record?', function(){
-          axios.delete('http://localhost:5001/movieman/movie/deleteMovie', {data: { id: val }})
+          axios.delete('http://localhost:5001/movieman/theatre/deleteTheatre', {data: { id: val }})
           .then(function (response) {
-            getMovies();
+            getTheatre();
             console.log("SUCCESSFULLY ADDED RECORD: ", response);
           })
           .catch(function (error) {
@@ -78,11 +78,11 @@ const MoviesGrid = (props) => {
  
 
   return (
-       <Grids data={moviegriddata} addRecord={openAddRecord} editRecord={editRecord} deleteRecord={deleteRecord} selection="NO"/>  
+       <Grids data={theatregriddata} addRecord={openAddRecord} editRecord={editRecord} deleteRecord={deleteRecord} selection="NO"/>  
 
    );
 
    
 
 };
-export default withRouter(MoviesGrid);
+export default withRouter(TheatresGrid);

@@ -25,8 +25,7 @@ const AddMovies = (props) => {
   }
 
   function goBack() {
-    console.log(">>>>>>>");
-    props.history.push({
+     props.history.push({
       pathname: "/MoviesGrid",
     });
   }
@@ -45,11 +44,11 @@ const AddMovies = (props) => {
   }
 
   return (
-    <div className="movie-container">
+    <div className="data-container">
       <input type="button" class="button" value="Back" onClick={() => goBack()}>
 
       </input>
-      <div className="movieform">
+      <div className="dataform">
         <h1>Movie Details</h1>
         <h2>Movie Name</h2>
         <input type="text" class="forminput" name="movieName" placeholder="" onChange={changeHandler} />

@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-export default function Grids({ data, addRecord }) {
-  //console.log(data, typeof data);
+export default function Grids({ data, addRecord,editRecord,deleteRecord ,selection,publishBidding}) {
+  
 
   const [searchStr, setSearchString] = useState("");
+  const [selRecordArray, setSelectedRecords] = useState([]);
+
+  //console.log("selection array>>>>>>>>>>"+selRecordArray );
 
   const generateGridData = () => {
     const filteredData =
@@ -20,6 +23,23 @@ export default function Grids({ data, addRecord }) {
     return filteredData;
   };
 
+  function selectRecords(event){
+     // console.log(">>>>>>>>>>>checkbox >>>>>>>> :"+event.target.value);
+       let arrRecord = [...selRecordArray];
+      if(event.target.checked){
+        arrRecord.push(event.target.value);
+        setSelectedRecords(arrRecord)
+      }else{
+        let index =arrRecord.indexOf(event.target.value)
+        arrRecord.splice(index,1);
+        setSelectedRecords(arrRecord)
+      }
+      
+     // console.log("arrRecord >>>>>>>>>>>>> "+arrRecord);
+     
+  }
+
+ 
   return (
     <div>
       <div>
@@ -38,55 +58,57 @@ export default function Grids({ data, addRecord }) {
           onClick={addRecord}
         ></input>
       </div>
-      {data == undefined ? null : (
+      {
+       data == undefined || data.length === 0  ? null : (
         <div class="container-table100">
           <div class="wrap-table100">
             <div class="table">
               <div class="row header">
-                {Object.keys(data[0]).map((head, i) => {
+                {selection == 'NO'? null : (
+                  <div class="cell" key={0}>EMPTY</div>
+                )}
+               
+                {Object.keys(data[0]).slice(1).map((head, i) => {
                   return (
-                    <div class="cell" key={i}>
-                      {" "}
-                      {head}{" "}
-                    </div>
-                  );
+                    <div class="cell" key={i}>{head}</div>
+                    );
                 })}
               </div>
               {generateGridData().map((option, i) => {
-                var body = Object.values(option);
+                var record = Object.values(option);
                 return (
                   <div class="row" key={i}>
-                    {body.map((values, j) => {
+                    {selection == 'NO'? null : (
+                      <div>
+                      <label class="container">
+                            <input type={selection}  value={record[0]}   onClick={(event) => selectRecords(event)}/>
+                             <span class="checkmark"></span>
+                         </label>
+                      </div>
+                     )}
+               
+                    {
+                     
+                    record.slice(1).map((values, j) => {
                       return (
-                        <div class="cell" data-title={values} key={j}>
-                          {" "}
-                          {values}{" "}
-                        </div>
+                        <div class="cell" data-title={values} key={j}>  {values}  </div>
                       );
-                    })}
-                    <div>
-                      <a
-                        class="edit"
-                        title=""
-                        data-toggle="tooltip"
-                        data-original-title="Edit"
-                      >
+                    })
+                    
+                    }
+                      <div>
+                      <a class="edit"  title="" data-toggle="tooltip" data-original-title="Edit" >
                         <i class="material-icons">
-                          {" "}
-                          <img src="../assets/images/pencil.svg" alt="Edit" />
+                          <img src="../assets/images/pencil.svg"  alt="Edit" onClick={() => editRecord(record) }/>
                         </i>
                       </a>
-                      <a
-                        class="delete"
-                        title=""
-                        data-toggle="tooltip"
-                        data-original-title="Delete"
-                      >
+                      <a class="delete" title="" data-toggle="tooltip" data-original-title="Delete" >
                         <i class="material-icons">
-                          <img src="../assets/images/pencil.svg" alt="Edit" />
+                          <img src="../assets/images/pencil.svg" alt="Delete" onClick={() => deleteRecord(record[0]) }/>
                         </i>
                       </a>
                     </div>
+                  
                   </div>
                 );
               })}
@@ -94,6 +116,15 @@ export default function Grids({ data, addRecord }) {
           </div>
         </div>
       )}
+ {publishBidding == null ? null : (
+      <div>
+      <input
+          type="button"
+          class="button"
+          value="Publish Bidding"
+          onClick={() => publishBidding(selRecordArray)}
+        ></input>
+      </div>)}
     </div>
   );
 }
