@@ -21,38 +21,21 @@ const MoviesGrid = (props) => {
    },[])
 
     async function getMovies() {
-      console.log("Go Back Movie Grid 2");
        try{
-         const response = await axios.get('http://localhost:5001/movieman/movie/getMovieData')
+        
+         const response = await axios.get('http://localhost:5001/movieman/ongoingbid/getOnGoingBIDData')
          return response.data;
        }catch(e){
-        return e;
+          return e;
        }
   
     }
 
    function openAddRecord() {
-     // getMovies();
-      console.log(">>>>>>>");
-      props.history.push({
-       pathname: "/AddMovies",
-      });
+    
     }
       function editRecord(val){
-      // try{ 
-      //    const response =   axios.get('http://localhost:5001/movieman/movie/editMovies', {data: { id: val }})
-      //    console.log("Selected Movie", response);
- 
-      //    return response.data;
-      //  }catch(e){
-      //     return e;
-      //  }
-
-       console.log(">>"+ val);
-         props.history.push({
-          pathname: "/AddMovies",
-        });
-   
+     
    }
 
    function deleteRecord(val){

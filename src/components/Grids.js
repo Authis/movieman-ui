@@ -6,7 +6,7 @@ export default function Grids({ data, addRecord,editRecord,deleteRecord ,selecti
   const [searchStr, setSearchString] = useState("");
   const [selRecordArray, setSelectedRecords] = useState([]);
 
-  //console.log("selection array>>>>>>>>>>"+selRecordArray );
+  console.log("data array>>>>>>>>>>",data );
 
   const generateGridData = () => {
     const filteredData =
@@ -65,7 +65,7 @@ export default function Grids({ data, addRecord,editRecord,deleteRecord ,selecti
             <div class="table">
               <div class="row header">
                 {selection == 'NO'? null : (
-                  <div class="cell" key={0}>EMPTY</div>
+                  <div class="cell" key={0}></div>
                 )}
                
                 {Object.keys(data[0]).slice(1).map((head, i) => {
@@ -76,12 +76,13 @@ export default function Grids({ data, addRecord,editRecord,deleteRecord ,selecti
               </div>
               {generateGridData().map((option, i) => {
                 var record = Object.values(option);
+                console.log("I am in grid record : ",record);
                 return (
                   <div class="row" key={i}>
                     {selection == 'NO'? null : (
                       <div>
                       <label class="container">
-                            <input type={selection}  value={record[0]}   onClick={(event) => selectRecords(event)}/>
+                            <input type={selection}  value={record[0]+"|"+record[3]}   onClick={(event) => selectRecords(event)}/>
                              <span class="checkmark"></span>
                          </label>
                       </div>

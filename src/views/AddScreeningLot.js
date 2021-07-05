@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState,useEffect,useCallback } from "react";
 import "../styles/forms.css";
+import alertify from "alertifyjs";
+import 'alertifyjs/build/css/alertify.css';
 import { withRouter } from "react-router-dom";
+import { Dropdown } from 'semantic-ui-react';
+import {DateTimeInput} from 'semantic-ui-calendar-react';
 const axios = require('axios').default;
 
 const AddMovies = (props) => {
-
-  const [allValues, setAllValues] = useState({
+  const initialState = {
     movieID: '',
     theatreID: '',
     screeningTime:'',
@@ -17,11 +20,76 @@ const AddMovies = (props) => {
     totalBids:'',
     insertedDate: '',
     updatedDate: '',
-   });
+  };
+ const [allValues, setAllValues] = useState(initialState );
+  let [movieList, setMovieList] = useState([]);
+  let [theatreList, setTheatreList] = useState([]);
+  
+   
+ 
+
+
+  useEffect( async() => {
+
+    const movieListOptions = await getMoviesDrop();
+    console.log("Movie >>>>>>>>>>>>>>>>>"+JSON.stringify(movieListOptions));
+    setMovieList(movieListOptions)
+
+ 
+    const theatreListOptions = await getTheatreDrop();
+    console.log("Theatre >>>>>>>>>>>>>>>>>"+JSON.stringify(theatreListOptions));
+    setTheatreList(theatreListOptions)
+    
+      
+  },[])
+
+
+
+ const clearState = () => {
+  setAllValues({ ...initialState });
+};
+ 
+  async function getMoviesDrop() {
+    try{
+     
+      const response = await axios.get('http://localhost:5001/movieman/movie/getMovieDataDropDown')
+      return response.data;
+    }catch(e){
+       return e;
+    }
+
+ }
+
+ async function getTheatreDrop() {
+  try{
+   
+    const response = await axios.get('http://localhost:5001/movieman/theatre/getTheatreDataDropDown')
+    return response.data;
+  }catch(e){
+     return e;
+  }
+
+}
+
+const formatDate = (dateString) => { 
+  let date = dateString.split(" "); date[1] = date[1]+":00Z";return new Date(date[0]+"T"+date[1])
+}
+  
   const changeHandler = e => {
+    console.log("changeHandler >>> "+ e.target.name +"----"+e.target.value)
     setAllValues({ ...allValues, [e.target.name]: e.target.value })
 
   }
+
+  const dropChangeHandler = (e,data) => {
+    console.log("movieChangeHandler >>>>", data);
+    setAllValues({ ...allValues, [data.name]: data.value })
+  }
+
+  // const changeHandler = useCallback(
+  //   ({target:{name,value}}) => setAllValues(state => ({ ...state, [name]:value }), [])
+  // );
+
 
   function goBack() {
      
@@ -31,10 +99,14 @@ const AddMovies = (props) => {
   }
 
   function addTheatre(val) {
+    
+    val.allValues.screeningTime = formatDate(val.allValues.screeningTime);
     console.log("add Theatre " + JSON.stringify(val.allValues))
     axios.post('http://localhost:5001/movieman/screening/addScreening', val.allValues)
       .then(function (response) {
-        console.log("SUCCESSFULLY ADDED RECORD: ", response);
+        alertify.alert('Add Screening', 'SUCCESSFULLY ADDED RECORD');
+        //clearState();
+         console.log("SUCCESSFULLY ADDED RECORD: ", response);
       })
       .catch(function (error) {
         console.log(error);
@@ -42,6 +114,12 @@ const AddMovies = (props) => {
 
 
   }
+
+  // const handleChange = (event, {name, value}) => {
+  //   if (this.state.hasOwnProperty(name)) {
+  //     this.setState({ [name]: value });
+  //   }
+  // }
 
   
 
@@ -53,16 +131,23 @@ const AddMovies = (props) => {
       <div className="dataform">
         <h1>Screening Lot Details</h1>
         <h2>Movie ID</h2>
-        <input type="text" class="forminput" name="movieID" placeholder="" onChange={changeHandler} />
-
+        <Dropdown placeholder='Select Movie' name="movieID" fluid search selection options={movieList} onChange={dropChangeHandler} />
+    
         <h2>Theatre ID</h2>
-        <input type="text" class="forminput" name="theatreID" placeholder="" onChange={changeHandler} />
+        <Dropdown placeholder='Theatre Movie' name="theatreID" fluid search selection options={theatreList} onChange={dropChangeHandler} />
 
         <h2>Screening Time</h2>
-        <input type="text" class="forminput" name="screeningTime" placeholder="" onChange={changeHandler} />
-
-        <h2>Ticket Price</h2>
-        <input type="text" class="forminput" name="ticketPrice" placeholder="" onChange={changeHandler} />
+         <DateTimeInput
+         dateFormat="YYYY-MM-DD"
+          name="screeningTime"
+          placeholder="Date Time"
+          value={allValues.screeningTime}
+          iconPosition="left"
+          onChange={(event,{value}) => setAllValues({ ...allValues, screeningTime: value})}
+        />
+        <h2>Ticket Price</h2>  
+        <input type="text" class="forminput" name="ticketPrice" placeholder="" 
+        onChange={changeHandler} />
 
         <h2>POC Name</h2>
         <input type="text" class="forminput" name="pocName" placeholder="" onChange={changeHandler} />
@@ -75,10 +160,6 @@ const AddMovies = (props) => {
 
         <h2>Maximum Bids</h2>
         <input type="text" class="forminput" name="maxBids" placeholder="" onChange={changeHandler} />
-
-        <h2>Total Bids</h2>
-        <input type="text" class="forminput" name="totalBids" placeholder="" onChange={changeHandler} />
-
         
         <button className="btn" onClick={() => addTheatre({ allValues })}>Add Movie</button>
       </div>

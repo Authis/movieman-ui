@@ -8,7 +8,9 @@ import AddTheatre from "./views/AddTheatre";
 import TheatresGrid from "./views/TheatresGrid";
 import AddScreeningLot from "./views/AddScreeningLot";
 import ScrenningLotGrid from "./views/ScrenningLotGrid";
+import Bids from "./views/Bids";
 import "./styles/Global.css";
+import 'semantic-ui-css/semantic.min.css';
 
  
 
@@ -25,6 +27,7 @@ const App = () => {
                <Route exact path="/AddTheatre" component={AddTheatre}/>
                <Route exact path="/ScrenningLotGrid" component={ScrenningLotGrid}/>
                <Route exact path="/AddScreeningLot" component={AddScreeningLot}/>
+               <Route exact path="/Bids" component={Bids}/>
                
                {/* 
                <Route exact path="/biddingMovies" component={BiddingMovies}/>

@@ -21,8 +21,8 @@ const TheatresGrid = (props) => {
    },[])
 
     async function getTheatre() {
+      console.log("Go Back Theatre Grid 2 ");
        try{
-        
          const response = await axios.get('http://localhost:5001/movieman/theatre/getTheatreData')
          return response.data;
        }catch(e){

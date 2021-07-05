@@ -8,6 +8,7 @@ const AddMovies = (props) => {
   const [allValues, setAllValues] = useState({
     movieName: '',
     launguage: '',
+    censCert:'',
     synopsis:'',
     genre:'',
     actor: '',
@@ -25,6 +26,7 @@ const AddMovies = (props) => {
   }
 
   function goBack() {
+    console.log("Go Back Movie Grid");
      props.history.push({
       pathname: "/MoviesGrid",
     });
@@ -55,6 +57,9 @@ const AddMovies = (props) => {
 
         <h2>Language</h2>
         <input type="text" class="forminput" name="launguage" placeholder="" onChange={changeHandler} />
+
+        <h2>Censor Certification</h2>
+        <input type="text" class="forminput" name="censCert" placeholder="" onChange={changeHandler} />
 
         <h2>Synopsis</h2>
         <input type="text" class="forminput" name="synopsis" placeholder="" onChange={changeHandler} />

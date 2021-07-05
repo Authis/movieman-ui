@@ -15,8 +15,31 @@ const ScrenningLotGrid = (props) => {
   useEffect(async () => {
 
     const data = await getScreening();
-    console.log("DYNAMIC ARRAY>>>>>>>>>>>>>>> ", data);
-    setScrLotgriddata(data);
+   // console.log("DYNAMIC ARRAY>>>>>>>>>>>>>>> ", data);
+ 
+   let screeningArr = [];
+   data.map((option,i) => {
+   //console.log( ">>>>",Object.keys(option))
+   console.log( ">>>>",option)
+      screeningArr.push({
+        "screeningID":option._id,
+        "movieName": option.movieDetail[0].movieName,
+        "theatreName": option.theatreDetail[0].theatreName,
+        "City": option.theatreDetail[0].city,
+        "screeningTime":option.screeningTime,
+        "ticketPrice":option.ticketPrice,
+        "pocName": option.pocName,
+        "pocNo": option.pocNo,
+        "minBids":option.minBids,
+        "maxBids": option.maxBids,
+        "totalBids":option.totalBids
+
+      })
+
+   })
+  
+
+    setScrLotgriddata(screeningArr);
 
   }, [])
 

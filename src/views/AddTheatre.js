@@ -25,7 +25,7 @@ const AddMovies = (props) => {
   }
 
   function goBack() {
-     
+    console.log("Go Back Theatre Grid");
     props.history.push({
       pathname: "/TheatreGrid",
     });
@@ -87,7 +87,7 @@ const AddMovies = (props) => {
         <h2>POC Number</h2>
         <input type="text" class="forminput" name="PocNo" placeholder="" onChange={changeHandler} />
 
-        <button className="btn" onClick={() => addTheatre({ allValues })}>Add Movie</button>
+        <button className="btn" onClick={() => addTheatre({ allValues })}>Add Theatre</button>
       </div>
     </div>
   );

@@ -32,9 +32,9 @@ const options = [
   },
  
   {
-    name: "On Going Bid",
+    name: "BIDS",
     icon: Settings,
-    nav:"/MoviesGrid",
+    nav:"/Bids",
   },
   
   {
