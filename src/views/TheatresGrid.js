@@ -1,4 +1,11 @@
 import React, { useState,useEffect } from "react";
+import ReactFlexyTable from "react-flexy-table";
+
+import deleteIcon from "./../assets/images/delete.png"
+import editIcon from "./../assets/images/edit.png"
+
+
+import "react-flexy-table/dist/index.css"
 import "../styles/grid.css";
 import { withRouter } from "react-router-dom";
 import Grids from "../components/Grids";
@@ -23,7 +30,7 @@ const TheatresGrid = (props) => {
     async function getTheatre() {
       console.log("Go Back Theatre Grid 2 ");
        try{
-         const response = await axios.get('http://localhost:5001/movieman/theatre/getTheatreData')
+         const response = await axios.get('http://localhost:5001/movieman/theatre/get/theatres')
          return response.data;
        }catch(e){
           return e;
@@ -75,11 +82,27 @@ const TheatresGrid = (props) => {
      
      
    }
- 
+   const additionalCols = [{
+    header: "Actions",
+    td: (data) => {
+      return <div>
+        <img src={deleteIcon} width="30" height="20" onClick={() => alert("this is delete for id " + data.id)} />  
+         <img src={editIcon} width="30" height="20" onClick={() => alert("this is edit for id " + data.id)} /> 
+         <input type="checkbox" value={data.id} onClick={() => alert("this is edit for id " + data.id)} />
+      </div>
+    }
+  }]
 
   return (
-       <Grids data={theatregriddata} addRecord={openAddRecord} editRecord={editRecord} deleteRecord={deleteRecord} selection="NO"/>  
-
+    <div>
+       <input
+          type="button"
+          class="button"
+          value="Add New"
+          onClick={openAddRecord}
+        ></input>
+       <ReactFlexyTable data={theatregriddata} sortable filterable additionalCols={additionalCols}/>
+    </div>
    );
 
    

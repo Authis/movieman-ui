@@ -33,7 +33,7 @@ const AddMovies = (props) => {
 
   function addTheatre(val) {
     console.log("add Theatre " + JSON.stringify(val.allValues))
-    axios.post('http://localhost:5001/movieman/theatre/addTheatre', val.allValues)
+    axios.post('http://localhost:5001/movieman/theatre/add', val.allValues)
       .then(function (response) {
         console.log("SUCCESSFULLY ADDED RECORD: ", response);
       })

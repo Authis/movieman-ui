@@ -1,7 +1,13 @@
 import React, { useState,useEffect } from "react";
-import "../styles/grid.css";
+import ReactFlexyTable from "react-flexy-table";
+
+import deleteIcon from "./../assets/images/delete.png"
+import editIcon from "./../assets/images/edit.png"
+import "react-flexy-table/dist/index.css"
+
+ 
 import { withRouter } from "react-router-dom";
-import Grids from "../components/Grids";
+ 
 import alertify from "alertifyjs";
 import 'alertifyjs/build/css/alertify.css';
 const axios = require('axios').default;
@@ -23,7 +29,7 @@ const MoviesGrid = (props) => {
     async function getMovies() {
       console.log("Go Back Movie Grid 2");
        try{
-         const response = await axios.get('http://localhost:5001/movieman/movie/getMovieData')
+         const response = await axios.get('http://localhost:5002/movieman/movie/get/movies')
          return response.data;
        }catch(e){
         return e;
@@ -76,10 +82,27 @@ const MoviesGrid = (props) => {
      
    }
  
-
+   const additionalCols = [{
+    header: "Actions",
+    td: (data) => {
+      return <div>
+        <img src={deleteIcon} width="30" height="20" onClick={() => alert("this is delete for id " + data._id)} />  
+         <img src={editIcon} width="30" height="20" onClick={() => alert("this is edit for id " + data._id)} /> 
+         <input type="checkbox" value={data.id} onClick={() => alert("this is edit for id " + data._id)} />
+      </div>
+    }
+  }]
   return (
-       <Grids data={moviegriddata} addRecord={openAddRecord} editRecord={editRecord} deleteRecord={deleteRecord} selection="NO"/>  
-
+    <div>
+      <input
+          type="button"
+          class="button"
+          value="Add New"
+          onClick={openAddRecord}
+        ></input>
+    <ReactFlexyTable data={moviegriddata} sortable filterable additionalCols={additionalCols}
+    />
+ </div>
    );
 
    

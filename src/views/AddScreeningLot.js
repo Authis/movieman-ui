@@ -51,9 +51,17 @@ const AddMovies = (props) => {
  
   async function getMoviesDrop() {
     try{
-     
-      const response = await axios.get('http://localhost:5001/movieman/movie/getMovieDataDropDown')
-      return response.data;
+      const response = await axios.get('http://localhost:5002/movieman/movie/get/movies');
+      let movieArr = [];
+      response.data.map((option,i) => {
+        movieArr.push({
+         "key": option._id,
+         "value" : option._id,
+         "text" : option.movieName,
+       })
+    })
+  
+      return movieArr;
     }catch(e){
        return e;
     }
@@ -63,8 +71,16 @@ const AddMovies = (props) => {
  async function getTheatreDrop() {
   try{
    
-    const response = await axios.get('http://localhost:5001/movieman/theatre/getTheatreDataDropDown')
-    return response.data;
+    const response = await axios.get('http://localhost:5001/movieman/theatre/get/theatres');
+    let thetreArr = [];
+    response.data.map((option,i) => {
+      thetreArr.push({
+       "key": option._id,
+       "value" : option._id,
+       "text" : option.theatreName +"-"+option.screenName,
+     })
+  })
+    return thetreArr;
   }catch(e){
      return e;
   }
@@ -102,7 +118,7 @@ const formatDate = (dateString) => {
     
     val.allValues.screeningTime = formatDate(val.allValues.screeningTime);
     console.log("add Theatre " + JSON.stringify(val.allValues))
-    axios.post('http://localhost:5001/movieman/screening/addScreening', val.allValues)
+    axios.post('http://localhost:5003/movieman/screening/add', val.allValues)
       .then(function (response) {
         alertify.alert('Add Screening', 'SUCCESSFULLY ADDED RECORD');
         //clearState();

@@ -1,4 +1,9 @@
 import React, { useState,useEffect } from "react";
+
+import ReactFlexyTable from "react-flexy-table";
+ 
+import "react-flexy-table/dist/index.css";
+
 import "../styles/grid.css";
 import { withRouter } from "react-router-dom";
 import Grids from "../components/Grids";
@@ -8,22 +13,22 @@ const axios = require('axios').default;
 
 
 
-const MoviesGrid = (props) => {
+const Bids = (props) => {
   
 
    let [moviegriddata, setmoviegriddata] = useState();
    useEffect( async ()=> {
 
-   const data = await getMovies();
+   const data = await getOnGoingBids();
    console.log("DYNAMIC ARRAY ", data);
      setmoviegriddata(data);
       
    },[])
 
-    async function getMovies() {
+    async function getOnGoingBids() {
        try{
         
-         const response = await axios.get('http://localhost:5001/movieman/ongoingbid/getOnGoingBIDData')
+         const response = await axios.get('http://localhost:5004/movieman/ongoingbid/get/ongoingbids')
          return response.data;
        }catch(e){
           return e;
@@ -34,7 +39,7 @@ const MoviesGrid = (props) => {
    function openAddRecord() {
     
     }
-      function editRecord(val){
+   function editRecord(val){
      
    }
 
@@ -43,7 +48,7 @@ const MoviesGrid = (props) => {
       alertify.confirm('Confirm', 'Do you really want to Delete the record?', function(){
           axios.delete('http://localhost:5001/movieman/movie/deleteMovie', {data: { id: val }})
           .then(function (response) {
-            getMovies();
+ 
             console.log("SUCCESSFULLY ADDED RECORD: ", response);
           })
           .catch(function (error) {
@@ -58,14 +63,33 @@ const MoviesGrid = (props) => {
      
      
    }
+   const formatData = () => {
+      return [
+      
+        {
+          header: "Bid ID",
+          key:"bidId" 
+        },{
+          header: "Bid Status",
+          key:"bidStatus" 
+        },{
+          header: "City",
+          key:"city" 
+        },{
+         header: "Bid Span",
+         key:"bidSpan" 
+       }, 
+  
+      ]
+   }
+  
  
 
   return (
-       <Grids data={moviegriddata} addRecord={openAddRecord} editRecord={editRecord} deleteRecord={deleteRecord} selection="NO"/>  
-
+       <ReactFlexyTable data={moviegriddata} sortable filterable columns={formatData()}/>
    );
 
    
 
 };
-export default withRouter(MoviesGrid);
+export default withRouter(Bids);
