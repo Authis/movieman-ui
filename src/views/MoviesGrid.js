@@ -17,7 +17,7 @@ const axios = require('axios').default;
 const MoviesGrid = (props) => {
   
 
-   let [moviegriddata, setmoviegriddata] = useState();
+   let [moviegriddata, setmoviegriddata] = useState([]);
    useEffect( async ()=> {
 
    const data = await getMovies();
@@ -64,7 +64,7 @@ const MoviesGrid = (props) => {
    function deleteRecord(val){
       console.log("Delete record>>"+ val);
       alertify.confirm('Confirm', 'Do you really want to Delete the record?', function(){
-          axios.delete('http://localhost:5001/movieman/movie/deleteMovie', {data: { id: val }})
+          axios.delete('http://localhost:5002/movieman/movie/delete?id='+val )
           .then(function (response) {
             getMovies();
             console.log("SUCCESSFULLY ADDED RECORD: ", response);
@@ -86,7 +86,7 @@ const MoviesGrid = (props) => {
     header: "Actions",
     td: (data) => {
       return <div>
-        <img src={deleteIcon} width="30" height="20" onClick={() => alert("this is delete for id " + data._id)} />  
+        <img src={deleteIcon} width="30" height="20" onClick={() => deleteRecord(data._id)} />  
          <img src={editIcon} width="30" height="20" onClick={() => alert("this is edit for id " + data._id)} /> 
          <input type="checkbox" value={data.id} onClick={() => alert("this is edit for id " + data._id)} />
       </div>
@@ -100,8 +100,9 @@ const MoviesGrid = (props) => {
           value="Add New"
           onClick={openAddRecord}
         ></input>
-    <ReactFlexyTable data={moviegriddata} sortable filterable additionalCols={additionalCols}
-    />
+        {moviegriddata.length > 0? 
+    <ReactFlexyTable data={moviegriddata}  sortable filterable additionalCols={additionalCols} />
+      :null}
  </div>
    );
 

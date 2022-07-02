@@ -75,10 +75,43 @@ const Bids = (props) => {
         },{
           header: "City",
           key:"city" 
-        },{
-         header: "Bid Span",
-         key:"bidSpan" 
-       }, 
+        } , {
+         header: "Movie Name",
+         key: "moviename",
+         td: (data) => {
+           return <div>
+             {data.movieDetails[0].movieName}
+ 
+           </div>
+         }
+       },{
+         header: "Theatre Name",
+         key: "theatrename",
+         td: (data) => {
+           return <div>
+             {data.theatreDetails[0].theatreName}
+ 
+           </div>
+         }
+       },{
+         header: "Address",
+         key: "address",
+         td: (data) => {
+           return <div>
+             {data.theatreDetails[0].address}
+ 
+           </div>
+         }
+       }, {
+         header: "Screening Time",
+         key: "screeningtime",
+         td: (data) => {
+           return <div>
+             {Date(data.screeningDetails[0].screeningTime)}
+ 
+           </div>
+         }
+       },
   
       ]
    }

@@ -24,6 +24,7 @@ const ScrenningLotGrid = (props) => {
     console.log("DYNAMIC ARRAY>>>>>>>>>>>>>>> ", data);
 
     let screeningArr = [];
+    if(data.length > 0){
     data.map((option, i) => {
       //console.log( ">>>>",Object.keys(option))
       console.log(">>>>", option)
@@ -45,6 +46,7 @@ const ScrenningLotGrid = (props) => {
       })
 
     })
+  }
 
 
     setScrLotgriddata(screeningArr);
@@ -103,28 +105,48 @@ const ScrenningLotGrid = (props) => {
   }
 
   function publishBidding(arrVal) {
-    var publishBoolean = true;
-    var firstCity; 
+    var publishCityBoolean = true;
+    var publishDateBoolean = true;
+    console.log("arrVal >>>>>>>>>>>>> ", arrVal);
+    const todayDate = new Date();
+    var recordDate;
+    var firstCity;
+    var errorArray = "";
+
+    //Validate city
     for (var i = 0; i < arrVal.length; i++) {
       firstCity = (arrVal[0].split("|"))[3];
       const splitcity = arrVal[i].split("|");
       if (firstCity !== splitcity[3]) {
-        publishBoolean = false
-        alertify.alert('Wrong City', 'Kindly select All same city!', function () { });
+        publishCityBoolean = false;
+        errorArray = "Kindly select all same city.";
+        break;
       }
     }
-    if (publishBoolean) {
+
+    //Validate Screening Date
+    for (var i = 0; i < arrVal.length; i++) {
+      recordDate = new Date((arrVal[i].split("|"))[4]);
+      console.log("recordDate >>>>>>>>>>>>> ", recordDate);
+      if (recordDate < todayDate) {
+        publishDateBoolean = false;
+        errorArray = errorArray + "<br>" + "Kindly select record with Future Screening Date.";
+        break;
+      }
+    }
+
+    if (publishCityBoolean && publishDateBoolean) {
       try {
-        alertify.prompt('Enter Bid Span', 'In Days', '',
-          function (evt, value) {
-            const response = axios.post('http://localhost:5004/movieman/ongoingbid/add',
-              { data: { arrayIds: arrVal, bidSpan:value} })
-            alertify.success('You entered: ' + value)
-            return response.data;
-          }, function () { alertify.error('Cancel') });
+        const response = axios.post('http://localhost:5004/movieman/ongoingbid/add',
+          { data: { arrayIds: arrVal } })
+        return response.data;
+
       } catch (e) {
         return e;
       }
+    } else {
+      console.log("errorArray >>>>>>>>>>>>> ", errorArray);
+      alertify.alert('Oops Error!!!', errorArray, function () { });
     }
 
   }
@@ -157,7 +179,7 @@ const ScrenningLotGrid = (props) => {
         key: "",
         td: (data) => {
           return <div>
-            <input type="checkbox" value={data.screeningID + "|" + data.movieID + "|" + data.theatreID + "|" + data.City}
+            <input type="checkbox" value={data.screeningID + "|" + data.movieID + "|" + data.theatreID + "|" + data.City + "|" + data.screeningTime}
               onClick={(event) => selectRecords(event)} />
           </div>
         }
@@ -217,7 +239,9 @@ const ScrenningLotGrid = (props) => {
         value="Add New"
         onClick={openAddRecord}
       ></input>
+      {scrLotgriddata.length > 0 ?
       <ReactFlexyTable data={scrLotgriddata} sortable filterable columns={formatData()} />
+    : null }
       <div>
         <input
           type="button"

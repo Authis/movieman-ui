@@ -18,7 +18,7 @@ const axios = require('axios').default;
 const TheatresGrid = (props) => {
   
 
-   let [theatregriddata, setTheatregriddata] = useState();
+   let [theatregriddata, setTheatregriddata] = useState([]);
    useEffect( async ()=> {
 
    const data = await getTheatre();
@@ -65,7 +65,7 @@ const TheatresGrid = (props) => {
    function deleteRecord(val){
       console.log("Delete record>>"+ val);
       alertify.confirm('Confirm', 'Do you really want to Delete the record?', function(){
-          axios.delete('http://localhost:5001/movieman/theatre/deleteTheatre', {data: { id: val }})
+          axios.delete('http://localhost:5001/movieman/theatre/delete?id='+val)
           .then(function (response) {
             getTheatre();
             console.log("SUCCESSFULLY ADDED RECORD: ", response);
@@ -86,9 +86,9 @@ const TheatresGrid = (props) => {
     header: "Actions",
     td: (data) => {
       return <div>
-        <img src={deleteIcon} width="30" height="20" onClick={() => alert("this is delete for id " + data.id)} />  
-         <img src={editIcon} width="30" height="20" onClick={() => alert("this is edit for id " + data.id)} /> 
-         <input type="checkbox" value={data.id} onClick={() => alert("this is edit for id " + data.id)} />
+        <img src={deleteIcon} width="30" height="20" onClick={() => deleteRecord(data._id)} />  
+         <img src={editIcon} width="30" height="20" onClick={() => alert("this is edit for id " + data._id)} /> 
+         <input type="checkbox" value={data.id} onClick={() => alert("this is edit for id " + data._id)} />
       </div>
     }
   }]
@@ -101,7 +101,9 @@ const TheatresGrid = (props) => {
           value="Add New"
           onClick={openAddRecord}
         ></input>
+        {theatregriddata.length > 0? 
        <ReactFlexyTable data={theatregriddata} sortable filterable additionalCols={additionalCols}/>
+        :null}
     </div>
    );
 
