@@ -1,0 +1,67 @@
+@import url("https://fonts.googleapis.com/css2?family=Saira+Semi+Condensed:wght@300&display=swap");
+
+.main-container {
+  max-width: 885px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20% auto 50px auto;
+}
+
+.dash-container {
+  margin: 1% auto;
+  text-align: center;
+}
+
+.icon-container {
+  width: 200px;
+  height: 200px;
+  border-radius: 10%;
+  /* display: flex; */
+  justify-content: center;
+  /* align-items: flex-end; */
+  /* background-color: #ececec; */
+  background: rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 80px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  /* position: relative; */
+}
+
+.icon-container:hover {
+  transform: scale(1.05);
+  transition-duration: 0.9s;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
+}
+.movie-icon {
+  background-size: 100%;
+  /* position: absolute; */
+}
+
+.dashboard-icons {
+  height: 160px;
+  width: 160px;
+}
+
+.dashboard-options-text {
+  font-family: "Saira Semi Condensed", sans-serif;
+  color: #000;
+  cursor: default;
+}
+
+.dash-container a {
+  text-decoration: none;
+}
+
+.search {
+  width: 130px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 16px;
+  font-size: 16px;
+  background-color: white;
+  background-image: url('../assets/images/searchicon.png');
+  background-position: 10px 10px; 
+  background-repeat: no-repeat;
+  padding: 12px 20px 12px 40px;
+  
+}
